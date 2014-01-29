@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AEPM_GetMasterService", "BareService\AEPM_GetMasterService.csproj", "{A6D12270-45D0-4EB0-8C5E-B952C125C28A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallAEPMService", "Setup1\Setup1.vdproj", "{10557556-FCE4-4FAB-8B7D-93B88C813522}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6D12270-45D0-4EB0-8C5E-B952C125C28A}.Debug|x86.ActiveCfg = Debug|x86
+		{A6D12270-45D0-4EB0-8C5E-B952C125C28A}.Debug|x86.Build.0 = Debug|x86
+		{A6D12270-45D0-4EB0-8C5E-B952C125C28A}.Release|x86.ActiveCfg = Release|x86
+		{A6D12270-45D0-4EB0-8C5E-B952C125C28A}.Release|x86.Build.0 = Release|x86
+		{10557556-FCE4-4FAB-8B7D-93B88C813522}.Debug|x86.ActiveCfg = Debug
+		{10557556-FCE4-4FAB-8B7D-93B88C813522}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

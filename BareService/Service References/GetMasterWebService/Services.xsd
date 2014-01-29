@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/encoded" elementFormDefault="qualified" targetNamespace="http://tempuri.org/encoded" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+  <xs:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+  <xs:complexType name="GetMasterResult">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Branded" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Commodity_Code" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Level" type="xs:short" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Status" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Returnable" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Tariff_Code" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="AMSC" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Technical_Qty" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Service_Life" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Package_Code" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Information" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="UserID" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="DateCreated" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="CrossPartList" type="tns:ArrayOfCrossPart" />
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Error" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfCrossPart">
+    <xs:complexContent mixed="false">
+      <xs:restriction xmlns:q1="http://schemas.xmlsoap.org/soap/encoding/" base="q1:Array">
+        <xs:attribute xmlns:a="http://schemas.xmlsoap.org/wsdl/" a:arrayType="tns:CrossPart[]" ref="q1:arrayType" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CrossPart">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Brand" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="PartNumber" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddMasterResult">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" form="unqualified" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" form="unqualified" name="Error" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

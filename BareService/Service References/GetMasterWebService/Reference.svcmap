@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="77e3f695-15fd-49ac-ade7-d2ec726f3d80" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Services.disco" MetadataType="Disco" ID="382e15f2-899f-43ae-a7e9-ee66fa71f966" SourceId="1" SourceUrl="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc?disco" />
+    <MetadataFile FileName="Services.wsdl" MetadataType="Wsdl" ID="c16d238b-ff77-41c7-90fa-a09532d0b5f3" SourceId="1" SourceUrl="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc?wsdl" />
+    <MetadataFile FileName="Services.xsd" MetadataType="Schema" ID="fe9902c1-3d7d-4073-a070-6f6fe0c1f459" SourceId="1" SourceUrl="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

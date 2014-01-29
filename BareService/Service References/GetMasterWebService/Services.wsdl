@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Services" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <xsd:import schemaLocation="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc?xsd=xsd0" namespace="http://tempuri.org/encoded" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServices_GetMaster_InputMessage">
+    <wsdl:part name="PartNumber" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="IServices_GetMaster_OutputMessage">
+    <wsdl:part xmlns:q1="http://tempuri.org/encoded" name="GetMasterResult" type="q1:GetMasterResult" />
+  </wsdl:message>
+  <wsdl:message name="IServices_AddMaster_InputMessage">
+    <wsdl:part name="UserID" type="xsd:string" />
+    <wsdl:part xmlns:q2="http://tempuri.org/encoded" name="CrossPartList" type="q2:ArrayOfCrossPart" />
+    <wsdl:part name="Branded" type="xsd:boolean" />
+    <wsdl:part name="Commodity_Code" type="xsd:string" />
+    <wsdl:part name="Level" type="xsd:short" />
+    <wsdl:part name="Status" type="xsd:string" />
+    <wsdl:part name="Returnable" type="xsd:boolean" />
+    <wsdl:part name="Tariff_Code" type="xsd:string" />
+    <wsdl:part name="AMSC" type="xsd:string" />
+    <wsdl:part name="Technical_Qty" type="xsd:int" />
+    <wsdl:part name="Service_Life" type="xsd:int" />
+    <wsdl:part name="Package_Code" type="xsd:string" />
+    <wsdl:part name="Information" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="IServices_AddMaster_OutputMessage">
+    <wsdl:part xmlns:q3="http://tempuri.org/encoded" name="AddMasterResult" type="q3:AddMasterResult" />
+  </wsdl:message>
+  <wsdl:portType name="IServices">
+    <wsdl:operation name="GetMaster" parameterOrder="PartNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/GetMaster" message="tns:IServices_GetMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/GetMasterResponse" message="tns:IServices_GetMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMaster" parameterOrder="UserID CrossPartList Branded Commodity_Code Level Status Returnable Tariff_Code AMSC Technical_Qty Service_Life Package_Code Information">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServices/AddMaster" message="tns:IServices_AddMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServices/AddMasterResponse" message="tns:IServices_AddMaster_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IServices" type="tns:IServices">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetMaster">
+      <soap:operation soapAction="http://tempuri.org/IServices/GetMaster" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://tempuri.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://tempuri.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMaster">
+      <soap:operation soapAction="http://tempuri.org/IServices/AddMaster" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://tempuri.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://tempuri.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Services">
+    <wsdl:port name="BasicHttpBinding_IServices" binding="tns:BasicHttpBinding_IServices">
+      <soap:address location="http://enmdevex.global.nmhg.corp:82/AEPM_services/Services.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
