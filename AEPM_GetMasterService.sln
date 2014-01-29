@@ -3,9 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AEPM_GetMasterService", "BareService\AEPM_GetMasterService.csproj", "{A6D12270-45D0-4EB0-8C5E-B952C125C28A}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallAEPMService", "Setup1\Setup1.vdproj", "{10557556-FCE4-4FAB-8B7D-93B88C813522}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AEPM_InstallService", "Setup1\Setup1.vdproj", "{10557556-FCE4-4FAB-8B7D-93B88C813522}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://acmvrtfs:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BareService\\AEPM_GetMasterService.csproj
+		SccProjectName1 = BareService
+		SccLocalPath1 = BareService
+		SccProjectUniqueName2 = Setup1\\Setup1.vdproj
+		SccProjectName2 = Setup1
+		SccLocalPath2 = Setup1
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
