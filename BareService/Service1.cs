@@ -15,7 +15,6 @@ using BareService.GetMasterWebService;
 using BareService.Properties;
 using IBM.Data.DB2.iSeries;
 
-
 namespace BareService
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
