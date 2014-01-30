@@ -80,7 +80,7 @@ namespace BareService
             Thread.CurrentThread.Abort();
         }
 
-        public async Task<string> TestAsync(DataTable dt, int i)
+        private async Task<string> TestAsync(DataTable dt, int i)
         {
             return await TaskEx.Run(() =>
             {
@@ -103,7 +103,7 @@ namespace BareService
                 {
                     xmlSerializer.Serialize(xmlTextWriter, getResult);
                     memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
-// ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                    // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
                     new UTF8Encoding().GetString(memoryStream.ToArray());
                     memoryStream.Dispose();
                     // return xmlText;
@@ -111,103 +111,140 @@ namespace BareService
 
                 if (getResult.Error == null)
                 {
-                    using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
-                    {
-                        string query = GetUpdateMasterString();
-
-                        var objDataAdapter = new iDB2DataAdapter();
-
-                        var cmd = new iDB2Command(query, conn);
-
-                        cmd.Connection.Open();
-
-                        objDataAdapter.UpdateCommand = cmd;
-                        objDataAdapter.UpdateCommand.CommandTimeout = 0;
-                        cmd.Parameters.Add("@guid", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@guid"].Value = guid;
-
-                        cmd.Parameters.Add("@usrid", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@usrid"].Value = (getResult.UserID.Trim().Length > 0) ? getResult.UserID : " ";
-
-                        cmd.Parameters.Add("@branded", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@branded"].Value = getResult.Branded;
-
-                        cmd.Parameters.Add("@comcode", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@comcode"].Value = (getResult.Commodity_Code.Trim().Length > 0)
-                            ? getResult.Commodity_Code
-                            : " ";
-
-                        cmd.Parameters.Add("@level", iDB2DbType.iDB2Integer);
-                        cmd.Parameters["@level"].Value = getResult.Level;
-
-                        cmd.Parameters.Add("@status", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@status"].Value = (getResult.Status.Trim().Length > 0) ? getResult.Status : " ";
-
-                        cmd.Parameters.Add("@rtnble", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@rtnble"].Value = getResult.Returnable;
-
-                        cmd.Parameters.Add("@tariffcd", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@tariffcd"].Value = (getResult.Tariff_Code.Trim().Length > 0)
-                            ? getResult.Tariff_Code
-                            : " ";
-
-                        cmd.Parameters.Add("@amsc", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@amsc"].Value = (getResult.AMSC.Trim().Length > 0) ? getResult.AMSC : " ";
-
-                        cmd.Parameters.Add("@tqty", iDB2DbType.iDB2Integer);
-                        cmd.Parameters["@tqty"].Value = getResult.Technical_Qty;
-
-                        cmd.Parameters.Add("@svclife", iDB2DbType.iDB2Integer);
-                        cmd.Parameters["@svclife"].Value = getResult.Service_Life;
-
-                        cmd.Parameters.Add("@pkgcode", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@pkgcode"].Value = (getResult.Package_Code.Trim().Length > 0)
-                            ? getResult.Package_Code
-                            : " ";
-
-                        cmd.Parameters.Add("@info", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@info"].Value = (getResult.Information.Trim().Length > 0)
-                            ? getResult.Information
-                            : " ";
-
-                        cmd.Parameters.Add("@retrn", iDB2DbType.iDB2Char);
-                        cmd.Parameters["@retrn"].Value = 'R';
-
-                        cmd.ExecuteNonQuery();
-                        cmd.Connection.Close();
-                    }
-
-                    foreach (CrossPart s in getResult.CrossPartList)
-                    {
-                        using (
-                            var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
-                        {
-                            string query = GetCrossPartInsertString();
-
-                            var objDataAdapter = new iDB2DataAdapter();
-
-                            var cmd = new iDB2Command(query, conn);
-
-                            cmd.Connection.Open();
-
-                            objDataAdapter.InsertCommand = cmd;
-                            objDataAdapter.InsertCommand.CommandTimeout = 0;
-                            cmd.Parameters.Add("@guid", iDB2DbType.iDB2Char);
-                            cmd.Parameters["@guid"].Value = guid;
-
-                            cmd.Parameters.Add("@item", iDB2DbType.iDB2Char);
-                            cmd.Parameters["@item"].Value = s.PartNumber;
-
-                            cmd.Parameters.Add("@brand", iDB2DbType.iDB2Char);
-                            cmd.Parameters["@brand"].Value = s.Brand;
-
-                            cmd.ExecuteNonQuery();
-                            cmd.Connection.Close();
-                        }
-                    }
+                    UpdateFoundPart(guid, getResult);
+                    InsertCrossParts(guid, getResult);
+                }
+                {
+                    UpdateFoundNotPart(guid);
                 }
                 return i.ToString(CultureInfo.InvariantCulture);
             });
+        }
+
+        private static void UpdateFoundNotPart(string guid)
+        {
+            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+            {
+                string query = GetPartNotFoundUpdateMasterString();
+
+                var objDataAdapter = new iDB2DataAdapter();
+
+                var cmd = new iDB2Command(query, conn);
+
+                cmd.Connection.Open();
+
+                objDataAdapter.UpdateCommand = cmd;
+                objDataAdapter.UpdateCommand.CommandTimeout = 0;
+                cmd.Parameters.Add("@guid", iDB2DbType.iDB2Char);
+                cmd.Parameters["@guid"].Value = guid;
+
+                cmd.Parameters.Add("@retrn", iDB2DbType.iDB2Char);
+                cmd.Parameters["@retrn"].Value = 'R';
+
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+            }
+        }
+
+        private static void UpdateFoundPart(string guid, GetMasterResult getResult)
+        {
+            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+            {
+                string query = GetPartFoundUpdateMasterString();
+
+                var objDataAdapter = new iDB2DataAdapter();
+
+                var cmd = new iDB2Command(query, conn);
+
+                cmd.Connection.Open();
+
+                objDataAdapter.UpdateCommand = cmd;
+                objDataAdapter.UpdateCommand.CommandTimeout = 0;
+                cmd.Parameters.Add("@guid", iDB2DbType.iDB2Char);
+                cmd.Parameters["@guid"].Value = guid;
+
+                cmd.Parameters.Add("@usrid", iDB2DbType.iDB2Char);
+                cmd.Parameters["@usrid"].Value = (getResult.UserID.Trim().Length > 0) ? getResult.UserID : " ";
+
+                cmd.Parameters.Add("@branded", iDB2DbType.iDB2Char);
+                cmd.Parameters["@branded"].Value = getResult.Branded;
+
+                cmd.Parameters.Add("@comcode", iDB2DbType.iDB2Char);
+                cmd.Parameters["@comcode"].Value = (getResult.Commodity_Code.Trim().Length > 0)
+                    ? getResult.Commodity_Code
+                    : " ";
+
+                cmd.Parameters.Add("@level", iDB2DbType.iDB2Integer);
+                cmd.Parameters["@level"].Value = getResult.Level;
+
+                cmd.Parameters.Add("@status", iDB2DbType.iDB2Char);
+                cmd.Parameters["@status"].Value = (getResult.Status.Trim().Length > 0) ? getResult.Status : " ";
+
+                cmd.Parameters.Add("@rtnble", iDB2DbType.iDB2Char);
+                cmd.Parameters["@rtnble"].Value = getResult.Returnable;
+
+                cmd.Parameters.Add("@tariffcd", iDB2DbType.iDB2Char);
+                cmd.Parameters["@tariffcd"].Value = (getResult.Tariff_Code.Trim().Length > 0)
+                    ? getResult.Tariff_Code
+                    : " ";
+
+                cmd.Parameters.Add("@amsc", iDB2DbType.iDB2Char);
+                cmd.Parameters["@amsc"].Value = (getResult.AMSC.Trim().Length > 0) ? getResult.AMSC : " ";
+
+                cmd.Parameters.Add("@tqty", iDB2DbType.iDB2Integer);
+                cmd.Parameters["@tqty"].Value = getResult.Technical_Qty;
+
+                cmd.Parameters.Add("@svclife", iDB2DbType.iDB2Integer);
+                cmd.Parameters["@svclife"].Value = getResult.Service_Life;
+
+                cmd.Parameters.Add("@pkgcode", iDB2DbType.iDB2Char);
+                cmd.Parameters["@pkgcode"].Value = (getResult.Package_Code.Trim().Length > 0)
+                    ? getResult.Package_Code
+                    : " ";
+
+                cmd.Parameters.Add("@info", iDB2DbType.iDB2Char);
+                cmd.Parameters["@info"].Value = (getResult.Information.Trim().Length > 0)
+                    ? getResult.Information
+                    : " ";
+
+                cmd.Parameters.Add("@retrn", iDB2DbType.iDB2Char);
+                cmd.Parameters["@retrn"].Value = 'R';
+
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+            }
+        }
+
+        private static void InsertCrossParts(string guid, GetMasterResult getResult)
+        {
+            foreach (CrossPart s in getResult.CrossPartList)
+            {
+                using (
+                    var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+                {
+                    string query = GetCrossPartInsertString();
+
+                    var objDataAdapter = new iDB2DataAdapter();
+
+                    var cmd = new iDB2Command(query, conn);
+
+                    cmd.Connection.Open();
+
+                    objDataAdapter.InsertCommand = cmd;
+                    objDataAdapter.InsertCommand.CommandTimeout = 0;
+                    cmd.Parameters.Add("@guid", iDB2DbType.iDB2Char);
+                    cmd.Parameters["@guid"].Value = guid;
+
+                    cmd.Parameters.Add("@item", iDB2DbType.iDB2Char);
+                    cmd.Parameters["@item"].Value = s.PartNumber;
+
+                    cmd.Parameters.Add("@brand", iDB2DbType.iDB2Char);
+                    cmd.Parameters["@brand"].Value = s.Brand;
+
+                    cmd.ExecuteNonQuery();
+                    cmd.Connection.Close();
+                }
+            }
         }
 
         private static string GetPartString(DataTable dt, int i)
@@ -225,7 +262,7 @@ namespace BareService
         }
 
 
-        public void GetAepmMaster()
+        private void GetAepmMaster()
         {
             var dt = new DataTable();
             var dset = new DataSet();
@@ -309,7 +346,7 @@ namespace BareService
             return sb.ToString();
         }
 
-        private static string GetUpdateMasterString()
+        private static string GetPartFoundUpdateMasterString()
         {
             var sb = new StringBuilder();
             sb.Append("UPDATE ");
@@ -319,8 +356,18 @@ namespace BareService
             return sb.ToString();
         }
 
+        private static string GetPartNotFoundUpdateMasterString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("UPDATE ");
+            sb.Append(Settings.Default.partFile);
+            sb.Append(
+                " SET G_RETRN = @retrn WHERE G_GUID = @guid");
+            return sb.ToString();
+        }
+
         // Define the parameters for the UPDATE command in different ways
-        public static void AddParameters(iDB2CommandBuilder cb)
+        private static void AddParameters(iDB2CommandBuilder cb)
         {
             try
             {
