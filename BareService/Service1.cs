@@ -123,7 +123,7 @@ namespace BareService
 
         private static void UpdateFoundNotPart(string guid)
         {
-            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionString"]))
             {
                 string query = GetPartNotFoundUpdateMasterString();
 
@@ -148,7 +148,7 @@ namespace BareService
 
         private static void UpdateFoundPart(string guid, GetMasterResult getResult)
         {
-            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+            using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionString"]))
             {
                 string query = GetPartFoundUpdateMasterString();
 
@@ -220,7 +220,7 @@ namespace BareService
             foreach (CrossPart s in getResult.CrossPartList)
             {
                 using (
-                    var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+                    var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionString"]))
                 {
                     string query = GetCrossPartInsertString();
 
@@ -270,7 +270,7 @@ namespace BareService
             //retrieve any records needing updating
             try
             {
-                using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionStringDev"]))
+                using (var conn = new iDB2Connection(ConfigurationManager.AppSettings["AS400ConnectionString"]))
                 {
                     //  string sql = @"SELECT G_GUID, G_ITEM, G_RETRN FROM CGJLEGAC.GETMSTRL1 WHERE G_RETRN != 'R' and G_RETRN != 'S'";
                     string sql = GetUnprocessMasterRecsString();
