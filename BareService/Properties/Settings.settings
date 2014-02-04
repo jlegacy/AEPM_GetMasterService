@@ -6,13 +6,13 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="partFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">cgjlegac.GETMSTR</Value>
+      <Value Profile="(Default)">cgjlegac.AGTPF</Value>
     </Setting>
     <Setting Name="partXRefFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">cgjlegac.GETMSTRXRF</Value>
+      <Value Profile="(Default)">cgjlegac.AGCRF</Value>
     </Setting>
     <Setting Name="partFileL1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">cgjlegac.GETMSTRL1</Value>
+      <Value Profile="(Default)">cgjlegac.AGTPFL1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

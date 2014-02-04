@@ -26,6 +26,7 @@ namespace BareService
         // the thread that will do the work
         private Thread _workerThread;
 
+
         public Service1()
         {
             InitializeComponent();
@@ -112,8 +113,10 @@ namespace BareService
                 if (getResult.Error == null)
                 {
                     UpdateFoundPart(guid, getResult);
+
                     InsertCrossParts(guid, getResult);
                 }
+                else
                 {
                     UpdateFoundNotPart(guid);
                 }

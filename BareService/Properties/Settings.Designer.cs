@@ -37,7 +37,7 @@ namespace BareService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.GETMSTR")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.AGTPF")]
         public string partFile {
             get {
                 return ((string)(this["partFile"]));
@@ -49,7 +49,7 @@ namespace BareService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.GETMSTRXRF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.AGCRF")]
         public string partXRefFile {
             get {
                 return ((string)(this["partXRefFile"]));
@@ -61,7 +61,7 @@ namespace BareService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.GETMSTRL1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cgjlegac.AGTPFL1")]
         public string partFileL1 {
             get {
                 return ((string)(this["partFileL1"]));
